@@ -5,16 +5,27 @@
         <v-form ref="form">
           <v-text-field
             v-model="email"
+            name="email"
             label="E-mail"
             required
           ></v-text-field>
           <v-text-field
             v-model="password"
+            name="password"
             label="Password"
             required
           ></v-text-field>
+          <v-alert
+            :value="error"
+            color="error"
+            icon="warning"
+            outline
+          >
+            {{ error }}
+          </v-alert>
           <v-btn
             @click="register"
+            color="info"
           >
             sign in
           </v-btn>
@@ -31,16 +42,22 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: null
     }
   },
   methods: {
     async register () {
-      const response = await AuthenticationService.register({
-        email: this.email,
-        password: this.password
-      })
-      console.log(response.data)
+      this.error = null
+
+      try {
+        await AuthenticationService.register({
+          email: this.email,
+          password: this.password
+        })
+      } catch (err) {
+        this.error = err.response.data.error
+      }
     }
   }
 }
