@@ -25,10 +25,10 @@
             {{ error }}
           </v-alert>
           <v-btn
-            @click="register"
+            @click="login"
             color="info"
           >
-            sign in
+            login
           </v-btn>
         </v-form>
       </v-flex>
@@ -48,11 +48,11 @@ export default {
     }
   },
   methods: {
-    async register () {
+    async login () {
       this.error = null
 
       try {
-        const response = await AuthenticationService.register({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })

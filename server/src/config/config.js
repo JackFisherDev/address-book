@@ -1,4 +1,5 @@
 module.exports = {
+  port: process.env.PORT || 8081,
   db: {
     database: process.env.DB_NAME || 'address-book',
     user: process.env.DB_USER || 'admin',
@@ -10,5 +11,7 @@ module.exports = {
       operatorsAliases: false
     }
   },
-  port: process.env.PORT || 8081
+  authentication: {
+    jwtSecret: process.env.JWR_SECRER || 'secret'
+  }
 }
