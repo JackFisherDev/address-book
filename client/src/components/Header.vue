@@ -9,6 +9,13 @@
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn
+        v-if="$store.state.isUserLoggedIn"
+        flat
+        @click="logout"
+      >
+        Log Out
+      </v-btn>
+      <v-btn
         v-if="!$store.state.isUserLoggedIn"
         flat
         route
@@ -30,6 +37,15 @@
 
 <script>
 export default {
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        name: 'Root'
+      })
+    }
+  }
 }
 </script>
 

@@ -2,35 +2,49 @@
   <v-container class="mt-5 pt-5">
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
-        <v-form ref="form">
-          <v-text-field
-            v-model="email"
-            name="email"
-            label="E-mail"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            :type="'password'"
-            name="password"
-            label="Password"
-            required
-          ></v-text-field>
-          <v-alert
-            :value="error"
-            color="error"
-            icon="warning"
-            outline
+        <v-card>
+            <v-card-title
+              primary-title
+              class="pb-0"
+            >
+              <div>
+                <h3 class="headline mb-0">Registration</h3>
+              </div>
+            </v-card-title>
+
+          <v-form
+            ref="form"
+            class="pa-4"
           >
-            {{ error }}
-          </v-alert>
-          <v-btn
-            @click="register"
-            color="info"
-          >
-            sign in
-          </v-btn>
-        </v-form>
+            <v-text-field
+              v-model="email"
+              name="email"
+              label="E-mail"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              :type="'password'"
+              name="password"
+              label="Password"
+              required
+            ></v-text-field>
+            <v-alert
+              :value="error"
+              color="error"
+              icon="warning"
+              outline
+            >
+              {{ error }}
+            </v-alert>
+            <v-btn
+              @click="register"
+              color="info"
+            >
+              sign in
+            </v-btn>
+          </v-form>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -62,6 +76,10 @@ export default {
 
         this.email = ''
         this.password = ''
+
+        this.$router.push({
+          name: 'Contacts'
+        })
       } catch (err) {
         this.error = err.response.data.error
       }
