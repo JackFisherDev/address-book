@@ -1,23 +1,42 @@
 <template>
-  <v-container grid-list-md text-xs-center class="mt-4">
-    <v-layout row justify-center class="mt-3">
-      <v-flex xs12 sm8 md6 text-xs-left>
+  <v-container
+    grid-list-md
+    text-xs-center
+    class="mt-4"
+  >
+    <v-layout
+      row
+      justify-center
+      class="mt-3"
+    >
+      <v-flex
+        xs12
+        sm8
+        md6
+        text-xs-left
+      >
         <v-card>
-          <v-toolbar flat class="transparent">
+          <v-toolbar
+            flat
+            class="transparent"
+          >
             <v-text-field
               label="Search contact"
               single-line
             ></v-text-field>
           </v-toolbar>
 
-          <v-list class="pt-0" dense>
-            <v-divider></v-divider>
+          <v-list
+            class="pt-0"
+            dense
+          >
+            <v-divider class="mb-3"></v-divider>
 
             <v-list-tile
               v-for="contact in contacts"
               :key="contact.id"
               avatar
-              @click="showContact"
+              @click="showContact(contact.id)"
             >
               <v-list-tile-avatar>
                 <img :src="contact.avatar">
@@ -28,7 +47,7 @@
                 <v-chip
                   v-if="contact.group"
                   small
-                  color="info"
+                  color="success"
                   text-color="white"
                 >{{ contact.group }}</v-chip>
               </v-list-tile-content>
@@ -38,6 +57,7 @@
                   <v-btn
                     slot="activator"
                     icon
+                    @click.stop="deleteContact(contact.id)"
                   >
                     <v-icon :color="'grey'">delete</v-icon>
                   </v-btn>
@@ -46,21 +66,33 @@
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
-          <div text-xs-center class="pa-4">
-            <v-btn
-              dark
-              class="info"
-              block
-              round
-              @click="createContactDialog = true"
+          <v-layout
+            row
+            justify-center
+          >
+            <v-flex
+              xs12
+              text-xs-center
+              class="pa-4"
             >
-              Add contact
-            </v-btn>
-          </div>
+              <v-btn
+                dark
+                class="info"
+                round
+                @click="createContactDialog = true"
+              >
+                Add contact
+              </v-btn>
+            </v-flex>
+          </v-layout>
         </v-card>
       </v-flex>
 
-      <v-dialog v-model="createContactDialog" persistent max-width="600px">
+      <v-dialog
+        v-model="createContactDialog"
+        persistent
+        max-width="600px"
+      >
         <v-card>
           <v-card-title>
             <span class="headline">New Contact</span>
@@ -109,8 +141,20 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="createContactDialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="createContact">Save</v-btn>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click="createContactDialog = false"
+            >
+              Close
+            </v-btn>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click="createContact"
+            >
+              Save
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -149,7 +193,7 @@ export default {
   },
 
   async mounted () {
-    this.contacts = (await ContactsService.getAllContacts()).data
+    this.getAllContacts()
   },
 
   methods: {
@@ -169,8 +213,17 @@ export default {
       this.contacts = (await ContactsService.getAllContacts()).data
     },
 
-    showContact () {
-      console.log('contact has been clicked')
+    showContact (contactId) {
+      this.$router.push({ path: `/contact/${contactId}` })
+    },
+
+    async deleteContact (contactId) {
+      try {
+        await ContactsService.deleteContact(contactId)
+        this.getAllContacts()
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }

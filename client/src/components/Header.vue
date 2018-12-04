@@ -5,7 +5,17 @@
     class="info"
   >
     <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-toolbar-title>Address Book</v-toolbar-title>
+    <v-toolbar-title class="mr-3">Address Book</v-toolbar-title>
+    <v-toolbar-items>
+      <v-btn
+        v-if="$store.state.isUserLoggedIn"
+        flat
+        route
+        to="/contacts"
+      >
+        My contacts
+      </v-btn>
+    </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn
@@ -19,7 +29,7 @@
         v-if="!$store.state.isUserLoggedIn"
         flat
         route
-        to="login"
+        to="/login"
       >
         Login
       </v-btn>
@@ -27,7 +37,7 @@
         v-if="!$store.state.isUserLoggedIn"
         flat
         route
-        to="register"
+        to="/register"
       >
         Sign Up
       </v-btn>
