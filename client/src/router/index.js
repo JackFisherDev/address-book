@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import Contacts from '@/components/Contacts'
+import Contacts from '@/components/ContactList/Contacts'
 import Contact from '@/components/Contact'
 
 Vue.use(Router)

@@ -106,13 +106,13 @@ export default {
 
   async mounted () {
     const contactId = this.$store.state.route.params.id
-    
+
     this.setContact(contactId)
   },
 
   methods: {
     async updateContact (contact) {
-      const c = await ContactsService.updateContact(contact)
+      await ContactsService.updateContact(contact)
 
       this.setContact(contact.id)
     },

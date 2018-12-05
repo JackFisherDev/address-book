@@ -8,7 +8,6 @@
     <v-toolbar-title class="mr-3">Address Book</v-toolbar-title>
     <v-toolbar-items>
       <v-btn
-        v-if="$store.state.isUserLoggedIn"
         flat
         route
         to="/contacts"

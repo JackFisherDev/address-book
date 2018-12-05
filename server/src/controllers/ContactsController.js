@@ -3,9 +3,27 @@ const { Contact } = require('../models')
 module.exports = {
   async getAllContacts (req, res) {
     try {
-      const contacts = await Contact.findAll({
-        where: {}
-      })
+      let contacts = null
+      const { search } = req.query
+
+      if (search) {
+        contacts = await Contact.findAll({
+          where: {
+            $or: [
+              'name',
+              'group'
+            ].map(key => ({
+              [key]: {
+                $like: `%${search}%`
+              }
+            }))
+          }
+        })
+      } else {
+        contacts = await Contact.findAll({
+          where: {}
+        })
+      }
       res.send(contacts)
     } catch (e) {
       res.status(500).send({
@@ -15,7 +33,6 @@ module.exports = {
   },
 
   async getContact (req, res) {
-    console.log(`bratann ${req.params.id}`)
     try {
       const contact = await Contact.find({
         where: {

@@ -16,15 +16,7 @@
         text-xs-left
       >
         <v-card>
-          <v-toolbar
-            flat
-            class="transparent"
-          >
-            <v-text-field
-              label="Search contact"
-              single-line
-            ></v-text-field>
-          </v-toolbar>
+          <contact-search />
 
           <v-list
             class="pt-0"
@@ -164,8 +156,12 @@
 
 <script>
 import ContactsService from '@/services/ContactsService'
+import ContactSearch from './ContactSearch'
 
 export default {
+  components: {
+    ContactSearch
+  },
   data () {
     return {
       contacts: null,
@@ -192,9 +188,9 @@ export default {
     }
   },
 
-  async mounted () {
-    this.getAllContacts()
-  },
+  // async mounted () {
+  //   this.getAllContacts()
+  // },
 
   methods: {
     async createContact () {
@@ -209,9 +205,9 @@ export default {
       }
     },
 
-    async getAllContacts () {
-      this.contacts = (await ContactsService.getAllContacts()).data
-    },
+    // async getAllContacts () {
+    //   this.contacts = (await ContactsService.getAllContacts()).data
+    // },
 
     showContact (contactId) {
       this.$router.push({ path: `/contact/${contactId}` })
@@ -223,6 +219,15 @@ export default {
         this.getAllContacts()
       } catch (err) {
         console.log(err)
+      }
+    }
+  },
+
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (val) {
+        this.contacts = (await ContactsService.getAllContacts(val)).data
       }
     }
   }
