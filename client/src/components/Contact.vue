@@ -19,7 +19,7 @@
           <v-layout
             row
             wrap
-            align-center
+            stretch
           >
             <v-flex
               xs12
@@ -41,6 +41,7 @@
               xs12
               sm8
               class="pl-4 pr-4"
+              align-content-center
             >
               <h6 class="title">{{ contact.name }}</h6>
               <v-chip
@@ -49,6 +50,30 @@
                 text-color="white"
               >{{ contact.group }}</v-chip>
             </v-flex>
+            <v-menu bottom left>
+              <v-btn
+                slot="activator"
+                icon
+                absolute
+                bottom
+                right
+              >
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+
+              <v-list>
+                <v-list-tile
+                  @click=""
+                >
+                  <v-list-tile-title>Edit</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile
+                  @click="deleteContact(contact.id)"
+                >
+                  <v-list-tile-title>Delete</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </v-layout>
           <v-layout
             row
@@ -105,9 +130,9 @@ export default {
   },
 
   async mounted () {
-    const contactId = this.$store.state.route.params.id
+    const { id } = this.$store.state.route.params
 
-    this.setContact(contactId)
+    this.setContact(id)
   },
 
   methods: {
@@ -119,6 +144,16 @@ export default {
 
     async setContact (contactId) {
       this.contact = (await ContactsService.getContact(contactId)).data
+    },
+
+    async deleteContact (contactId) {
+      try {
+        await ContactsService.deleteContact(contactId)
+
+        this.$router.push({ path: '/contacts' })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }

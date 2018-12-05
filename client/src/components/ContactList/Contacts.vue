@@ -188,10 +188,6 @@ export default {
     }
   },
 
-  // async mounted () {
-  //   this.getAllContacts()
-  // },
-
   methods: {
     async createContact () {
       if (!this.$refs.form.validate()) return
@@ -205,9 +201,9 @@ export default {
       }
     },
 
-    // async getAllContacts () {
-    //   this.contacts = (await ContactsService.getAllContacts()).data
-    // },
+    async getAllContacts () {
+      this.contacts = (await ContactsService.getAllContacts()).data
+    },
 
     showContact (contactId) {
       this.$router.push({ path: `/contact/${contactId}` })
