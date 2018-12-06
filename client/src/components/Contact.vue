@@ -15,11 +15,39 @@
         md6
         text-xs-left
       >
-        <v-card class="pt-4 pb-4">
+        <v-card class="pb-4">
+          <v-card-title class="info white--text">
+            <span class="headline">{{contact.name}}</span>
+
+            <v-spacer></v-spacer>
+
+            <v-menu
+              bottom
+              left
+            >
+              <v-btn
+                slot="activator"
+                icon
+                dark
+              >
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+
+              <v-list>
+                <v-list-tile @click="enabledEditMode = true">
+                  <v-list-tile-title>Edit</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile @click="deleteContact(contact.id)">
+                  <v-list-tile-title>Delete</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-card-title>
           <v-layout
             row
             wrap
             stretch
+            class="mt-3"
           >
             <v-flex
               xs12
@@ -43,37 +71,19 @@
               class="pl-4 pr-4"
               align-content-center
             >
-              <h6 class="title">{{ contact.name }}</h6>
+              <v-text-field
+                  v-model="contact.name"
+                  :readonly="!enabledEditMode"
+                  prepend-icon="person"
+                  :append-icon="enabledEditMode ? 'edit' : ''"
+                  label="Contact name"
+                ></v-text-field>
               <v-chip
                 small
                 color="success"
                 text-color="white"
               >{{ contact.group }}</v-chip>
             </v-flex>
-            <v-menu bottom left>
-              <v-btn
-                slot="activator"
-                icon
-                absolute
-                bottom
-                right
-              >
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-
-              <v-list>
-                <v-list-tile
-                  @click=""
-                >
-                  <v-list-tile-title>Edit</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile
-                  @click="deleteContact(contact.id)"
-                >
-                  <v-list-tile-title>Delete</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
           </v-layout>
           <v-layout
             row
@@ -83,24 +93,29 @@
               xs12
               class="pl-4 pr-4"
             >
-              <h6 class="title">Contact info</h6>
+              <h6 class="title mt-2 mb-3">Contact info</h6>
               <div>
                 <v-text-field
                   v-model="contact.email"
+                  :readonly="!enabledEditMode"
+                  prepend-icon="email"
+                  :append-icon="enabledEditMode ? 'edit' : ''"
                   label="Email"
                 ></v-text-field>
               </div>
               <div>
                 <v-text-field
                   v-model="contact.phoneNumber"
+                  :readonly="!enabledEditMode"
+                  prepend-icon="phone"
+                  :append-icon="enabledEditMode ? 'edit' : ''"
                   label="Phone Number"
                 ></v-text-field>
               </div>
-              <div>
+              <div v-if="enabledEditMode">
                 <v-btn
                   flat
-                  route
-                  to="/contacts"
+                  @click="enabledEditMode = false"
                 >
                   Cancel
                 </v-btn>
@@ -125,7 +140,8 @@ import ContactsService from '@/services/ContactsService'
 export default {
   data () {
     return {
-      contact: {}
+      contact: {},
+      enabledEditMode: false
     }
   },
 
