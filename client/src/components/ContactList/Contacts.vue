@@ -17,7 +17,7 @@
       >
         <v-card>
           <contact-search />
-          
+
           <v-list
             class="pt-0"
             dense
@@ -122,10 +122,12 @@
                       label="Phone number"
                       required
                     ></v-text-field>
-                    <v-text-field
+                    <v-autocomplete
                       v-model="contact.group"
+                      :items="groups"
                       label="Group"
-                    ></v-text-field>
+                      persistent-hint
+                    ></v-autocomplete>
                   </v-form>
                 </v-flex>
               </v-layout>
@@ -222,7 +224,8 @@ export default {
 
     async getGroups () {
       try {
-        this.groups = (await GroupsService.getGroups()).data
+        const groupList = (await GroupsService.getGroups()).data
+        this.groups = groupList.map(group => group.name)
       } catch (err) {
         console.log(err)
       }
