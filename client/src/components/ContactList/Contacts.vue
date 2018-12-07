@@ -102,17 +102,20 @@
                       v-model="contact.name"
                       :rules="nameRules"
                       label="Contact name"
+                      prepend-icon="person"
                       required
                     ></v-text-field>
                     <v-text-field
                       v-model="contact.email"
                       :rules="emailRules"
                       label="E-mail"
+                      prepend-icon="email"
                       required
                     ></v-text-field>
                     <v-text-field
                       v-model="contact.avatar"
                       label="Avatar"
+                      prepend-icon="photo"
                     ></v-text-field>
                     <v-text-field
                       v-model="contact.phoneNumber"
@@ -120,6 +123,7 @@
                       return-masked-value
                       mask="+################"
                       label="Phone number"
+                      prepend-icon="phone"
                       required
                     ></v-text-field>
                     <v-autocomplete
@@ -127,13 +131,14 @@
                       :items="groups"
                       label="Group"
                       persistent-hint
+                      prepend-icon="group"
                     ></v-autocomplete>
                   </v-form>
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="pl-3 pr-3 pb-3">
             <v-spacer></v-spacer>
             <v-btn
               color="blue darken-1"
@@ -143,8 +148,7 @@
               Close
             </v-btn>
             <v-btn
-              color="blue darken-1"
-              flat
+              class="info"
               @click="createContact"
             >
               Save
