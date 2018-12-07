@@ -21,4 +21,7 @@ module.exports = (app) => {
     ContactsController.deleteContact)
   app.put('/api/book/:id',
     ContactsController.updateContact)
+
+  app.get('/api/groups',
+    ContactsController.getGroups)
 }

@@ -1,4 +1,4 @@
-const { Contact } = require('../models')
+const { Contact, Group } = require('../models')
 
 module.exports = {
   async getAllContacts (req, res) {
@@ -84,6 +84,19 @@ module.exports = {
     } catch (e) {
       res.status(500).send({
         error: 'Ooops! Sorry, something went wrong when trying to update the contact.'
+      })
+    }
+  },
+
+  async getGroups (req, res) {
+    try {
+      const groups = await Group.findAll({
+        where: {}
+      })
+      res.send(groups)
+    } catch (e) {
+      res.status(500).send({
+        error: 'Ooops! Sorry, something went wrong when trying to fetch groups.'
       })
     }
   }

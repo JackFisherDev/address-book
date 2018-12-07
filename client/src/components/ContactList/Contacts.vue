@@ -17,7 +17,7 @@
       >
         <v-card>
           <contact-search />
-
+          
           <v-list
             class="pt-0"
             dense
@@ -156,6 +156,7 @@
 
 <script>
 import ContactsService from '@/services/ContactsService'
+import GroupsService from '@/services/GroupsService'
 import ContactSearch from './ContactSearch'
 
 export default {
@@ -173,6 +174,7 @@ export default {
         group: null
       },
       createContactDialog: false,
+      groups: [],
       newContactForm: true,
       // Form validation rules
       nameRules: [
@@ -216,7 +218,19 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+
+    async getGroups () {
+      try {
+        this.groups = (await GroupsService.getGroups()).data
+      } catch (err) {
+        console.log(err)
+      }
     }
+  },
+
+  mounted () {
+    this.getGroups()
   },
 
   watch: {
