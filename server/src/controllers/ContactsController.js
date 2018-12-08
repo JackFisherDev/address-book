@@ -49,6 +49,18 @@ module.exports = {
 
   async createContact (req, res) {
     try {
+      const { group } = req.body
+      console.log('group', group)
+      const groupList = await Group.find({
+        where: {
+          name: group
+        }
+      })
+
+      if (!groupList) {
+        await Group.create({ name: group })
+      }
+
       const contact = await Contact.create(req.body)
       res.send(contact)
     } catch (e) {

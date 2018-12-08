@@ -126,13 +126,15 @@
                       prepend-icon="phone"
                       required
                     ></v-text-field>
-                    <v-autocomplete
+                    <v-combobox
                       v-model="contact.group"
                       :items="groups"
                       label="Group"
+                      small-chips
+                      search-input
                       persistent-hint
                       prepend-icon="group"
-                    ></v-autocomplete>
+                    ></v-combobox>
                   </v-form>
                 </v-flex>
               </v-layout>
