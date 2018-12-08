@@ -99,26 +99,26 @@
                     lazy-validation
                   >
                     <v-text-field
-                      v-model="contact.name"
+                      v-model="newContact.name"
                       :rules="nameRules"
                       label="Contact name"
                       prepend-icon="person"
                       required
                     ></v-text-field>
                     <v-text-field
-                      v-model="contact.email"
+                      v-model="newContact.email"
                       :rules="emailRules"
                       label="E-mail"
                       prepend-icon="email"
                       required
                     ></v-text-field>
                     <v-text-field
-                      v-model="contact.avatar"
+                      v-model="newContact.avatar"
                       label="Avatar"
                       prepend-icon="photo"
                     ></v-text-field>
                     <v-text-field
-                      v-model="contact.phoneNumber"
+                      v-model="newContact.phoneNumber"
                       :rules="phoneNumberRules"
                       return-masked-value
                       mask="+################"
@@ -127,7 +127,7 @@
                       required
                     ></v-text-field>
                     <v-combobox
-                      v-model="contact.group"
+                      v-model="newContact.group"
                       :items="groups"
                       label="Group"
                       small-chips
@@ -174,7 +174,14 @@ export default {
   data () {
     return {
       contacts: null,
-      contact: {
+      defaultContact: {
+        name: null,
+        email: null,
+        avatar: null,
+        phoneNumber: null,
+        group: null
+      },
+      newContact: {
         name: null,
         email: null,
         avatar: null,
@@ -203,8 +210,10 @@ export default {
       if (!this.$refs.form.validate()) return
 
       try {
-        await ContactsService.createContact(this.contact)
+        await ContactsService.createContact(this.newContact)
         this.createContactDialog = false
+        this.newContact = Object.assign({}, this.defaultContact)
+        this.$refs.form.reset()
         this.getAllContacts()
       } catch (err) {
         console.log(err)
