@@ -85,6 +85,7 @@
                     label="Contact name"
                   ></v-text-field>
                 <v-chip
+                  v-if="contact.group"
                   small
                   color="success"
                   text-color="white"
