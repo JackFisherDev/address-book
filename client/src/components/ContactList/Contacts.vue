@@ -35,7 +35,10 @@
               </v-list-tile-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title v-html="contact.name"></v-list-tile-title>
+                <v-list-tile-title
+                  v-html="contact.name"
+                  class="font-weight-bold"
+                ></v-list-tile-title>
                 <v-chip
                   v-if="contact.group"
                   small
@@ -134,7 +137,20 @@
                       search-input
                       persistent-hint
                       prepend-icon="group"
-                    ></v-combobox>
+                    >
+                      <template
+                        slot="selection"
+                        slot-scope="data"
+                      >
+                        <v-chip
+                          class="success"
+                          text-color="white"
+                          small
+                        >
+                          {{ data.item }}
+                        </v-chip>
+                      </template>
+                    </v-combobox>
                   </v-form>
                 </v-flex>
               </v-layout>
