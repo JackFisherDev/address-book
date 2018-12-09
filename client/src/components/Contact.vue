@@ -77,13 +77,13 @@
                 align-content-center
               >
                 <v-text-field
-                    v-model="contact.name"
-                    :rules="nameRules"
-                    :readonly="!enabledEditMode"
-                    prepend-icon="person"
-                    :append-icon="enabledEditMode ? 'edit' : ''"
-                    label="Contact name"
-                  ></v-text-field>
+                  v-model="contact.name"
+                  :rules="nameRules"
+                  :readonly="!enabledEditMode"
+                  prepend-icon="person"
+                  :append-icon="enabledEditMode ? 'edit' : ''"
+                  label="Contact name"
+                ></v-text-field>
                 <v-chip
                   v-if="contact.group"
                   small
