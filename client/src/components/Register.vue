@@ -20,6 +20,7 @@
               v-model="email"
               name="email"
               label="E-mail"
+              prepend-icon="email"
               required
             ></v-text-field>
             <v-text-field
@@ -27,6 +28,7 @@
               :type="'password'"
               name="password"
               label="Password"
+              prepend-icon="lock"
               required
             ></v-text-field>
             <v-alert
