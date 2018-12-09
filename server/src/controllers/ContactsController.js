@@ -1,5 +1,19 @@
 const { Contact, Group } = require('../models')
 
+async function addNewGroup (group) {
+  if (group) {
+    const groupList = await Group.find({
+      where: {
+        name: group
+      }
+    })
+
+    if (!groupList) {
+      await Group.create({ name: group })
+    }
+  }
+}
+
 module.exports = {
   async getAllContacts (req, res) {
     try {
@@ -51,17 +65,7 @@ module.exports = {
     try {
       const { group } = req.body
 
-      if (group) {
-        const groupList = await Group.find({
-          where: {
-            name: group
-          }
-        })
-
-        if (!groupList) {
-          await Group.create({ name: group })
-        }
-      }
+      addNewGroup(group)
 
       const contact = await Contact.create(req.body)
       res.send(contact)
@@ -89,6 +93,10 @@ module.exports = {
 
   async updateContact (req, res) {
     try {
+      const { group } = req.body
+
+      addNewGroup(group)
+
       await Contact.update(req.body, {
         where: {
           id: req.params.id

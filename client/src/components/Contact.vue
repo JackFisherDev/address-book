@@ -84,12 +84,30 @@
                   :append-icon="enabledEditMode ? 'edit' : ''"
                   label="Contact name"
                 ></v-text-field>
-                <v-chip
-                  v-if="contact.group"
-                  small
-                  color="success"
-                  text-color="white"
-                >{{ contact.group }}</v-chip>
+                <v-combobox
+                  v-model="contact.group"
+                  :items="groups"
+                  :readonly="!enabledEditMode"
+                  label="Group"
+                  small-chips
+                  search-input
+                  persistent-hint
+                  prepend-icon="group"
+                  append-icon="arrow_drop_down"
+                >
+                  <template
+                    slot="selection"
+                    slot-scope="data"
+                  >
+                    <v-chip
+                      class="success"
+                      text-color="white"
+                      small
+                    >
+                      {{ data.item }}
+                    </v-chip>
+                  </template>
+                </v-combobox>
               </v-flex>
             </v-layout>
             <v-layout
@@ -146,6 +164,7 @@
 
 <script>
 import ContactsService from '@/services/ContactsService'
+import GroupsService from '@/services/GroupsService'
 
 export default {
   data () {
@@ -153,6 +172,7 @@ export default {
       contact: {},
       contactForm: true,
       enabledEditMode: false,
+      groups: [],
       // Form validation
       nameRules: [
         name => !!name || 'Please, enter contact name.'
@@ -171,6 +191,7 @@ export default {
     const { id } = this.$store.state.route.params
 
     this.setContact(id)
+    this.getGroups()
   },
 
   methods: {
@@ -196,6 +217,15 @@ export default {
         await ContactsService.deleteContact(contactId)
 
         this.$router.push({ path: '/contacts' })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async getGroups () {
+      try {
+        const groupList = (await GroupsService.getGroups()).data
+        this.groups = groupList.map(group => group.name)
       } catch (err) {
         console.log(err)
       }
