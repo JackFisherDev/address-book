@@ -23,9 +23,10 @@ module.exports = {
       if (search) {
         contacts = await Contact.findAll({
           where: {
+            userID,
             $or: [
               'name',
-              'group'
+              'groupID'
             ].map(key => ({
               [key]: {
                 $like: `%${search}%`

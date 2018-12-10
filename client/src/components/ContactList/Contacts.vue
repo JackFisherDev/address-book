@@ -2,7 +2,7 @@
   <v-container
     grid-list-md
     text-xs-center
-    class="mt-4"
+    class="mt-5 pt-4"
   >
     <v-layout
       row
