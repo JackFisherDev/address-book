@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     email: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    group: DataTypes.STRING
+    groupId: DataTypes.STRING,
+    userId: DataTypes.STRING
   })
 
   return Contact
