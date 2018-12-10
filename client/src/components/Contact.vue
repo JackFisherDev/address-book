@@ -208,13 +208,13 @@ export default {
       }
     },
 
-    async setContact (contactId) {
-      this.contact = (await ContactsService.getContact(contactId)).data
+    async setContact (contactID) {
+      this.contact = (await ContactsService.getContact(contactID)).data
     },
 
-    async deleteContact (contactId) {
+    async deleteContact (contactID) {
       try {
-        await ContactsService.deleteContact(contactId)
+        await ContactsService.deleteContact(contactID)
 
         this.$router.push({ path: '/contacts' })
       } catch (err) {

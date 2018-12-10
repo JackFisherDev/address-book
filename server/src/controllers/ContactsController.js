@@ -18,7 +18,7 @@ module.exports = {
   async getAllContacts (req, res) {
     try {
       let contacts = null
-      const { search } = req.query
+      const { userID, search } = req.query
 
       if (search) {
         contacts = await Contact.findAll({
@@ -35,7 +35,9 @@ module.exports = {
         })
       } else {
         contacts = await Contact.findAll({
-          where: {}
+          where: {
+            userID
+          }
         })
       }
       res.send(contacts)

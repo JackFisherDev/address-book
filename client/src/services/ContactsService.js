@@ -1,24 +1,25 @@
 import Api from '@/services/Api'
 
 export default {
-  getAllContacts (searchVal) {
+  getAllContacts (userID, searchVal) {
     return Api().get('api/book', {
       params: {
+        userID,
         search: searchVal
       }
     })
   },
 
-  getContact (contactId) {
-    return Api().get(`api/book/${contactId}`)
+  getContact (contactID) {
+    return Api().get(`api/book/${contactID}`)
   },
 
   createContact (contact) {
     return Api().post('api/book', contact)
   },
 
-  deleteContact (contactId) {
-    return Api().delete(`api/book/${contactId}`)
+  deleteContact (contactID) {
+    return Api().delete(`api/book/${contactID}`)
   },
 
   updateContact (contact) {

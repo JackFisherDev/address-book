@@ -195,14 +195,16 @@ export default {
         email: null,
         avatar: null,
         phoneNumber: null,
-        group: null
+        group: null,
+        userID: this.$store.state.user.id
       },
       newContact: {
         name: null,
         email: null,
         avatar: null,
         phoneNumber: null,
-        group: null
+        group: null,
+        userID: this.$store.state.user.id
       },
       createContactDialog: false,
       groups: [],
@@ -230,24 +232,24 @@ export default {
         this.createContactDialog = false
         this.newContact = Object.assign({}, this.defaultContact)
         this.$refs.form.reset()
-        this.getAllContacts()
+        this.getAllContacts(this.defaultContact.userID)
       } catch (err) {
         console.log(err)
       }
     },
 
-    async getAllContacts () {
-      this.contacts = (await ContactsService.getAllContacts()).data
+    async getAllContacts (userID) {
+      this.contacts = (await ContactsService.getAllContacts(userID)).data
     },
 
-    showContact (contactId) {
-      this.$router.push({ path: `/contact/${contactId}` })
+    showContact (contactID) {
+      this.$router.push({ path: `/contact/${contactID}` })
     },
 
-    async deleteContact (contactId) {
+    async deleteContact (contactID) {
       try {
-        await ContactsService.deleteContact(contactId)
-        this.getAllContacts()
+        await ContactsService.deleteContact(contactID)
+        this.getAllContacts(this.defaultContact.userID)
       } catch (err) {
         console.log(err)
       }
@@ -271,7 +273,7 @@ export default {
     '$route.query.search': {
       immediate: true,
       async handler (val) {
-        this.contacts = (await ContactsService.getAllContacts(val)).data
+        this.contacts = (await ContactsService.getAllContacts(this.defaultContact.userID, val)).data
       }
     }
   }
