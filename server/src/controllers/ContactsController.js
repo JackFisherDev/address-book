@@ -1,15 +1,18 @@
 const { Contact, Group } = require('../models')
 
-async function addNewGroup (group) {
-  if (group) {
+async function addNewGroup (groupName, userID) {
+  if (groupName) {
     const groupList = await Group.find({
       where: {
-        name: group
+        name: groupName
       }
     })
 
     if (!groupList) {
-      await Group.create({ name: group })
+      await Group.create({
+        name: groupName,
+        userID
+      })
     }
   }
 }
@@ -41,6 +44,7 @@ module.exports = {
           }
         })
       }
+
       res.send(contacts)
     } catch (e) {
       res.status(500).send({
@@ -56,6 +60,7 @@ module.exports = {
           id: req.params.id
         }
       })
+
       res.send(contact)
     } catch (e) {
       res.status(500).send({
@@ -66,11 +71,12 @@ module.exports = {
 
   async createContact (req, res) {
     try {
-      const { group } = req.body
+      const { groupName, userID } = req.body
 
-      addNewGroup(group)
+      addNewGroup(groupName, userID)
 
       const contact = await Contact.create(req.body)
+
       res.send(contact)
     } catch (e) {
       res.status(500).send({
@@ -86,6 +92,7 @@ module.exports = {
           id: req.params.id
         }
       })
+
       res.send('Contact has been deleted')
     } catch (e) {
       res.status(500).send({
@@ -105,6 +112,7 @@ module.exports = {
           id: req.params.id
         }
       })
+
       res.send('Contact has been updated')
     } catch (e) {
       res.status(500).send({
@@ -115,9 +123,13 @@ module.exports = {
 
   async getGroups (req, res) {
     try {
+      const { userID } = req.query
       const groups = await Group.findAll({
-        where: {}
+        where: {
+          userID
+        }
       })
+
       res.send(groups)
     } catch (e) {
       res.status(500).send({

@@ -40,11 +40,11 @@
                   class="font-weight-bold"
                 ></v-list-tile-title>
                 <v-chip
-                  v-if="contact.group"
+                  v-if="contact.groupName"
                   small
                   color="success"
                   text-color="white"
-                >{{ contact.group }}</v-chip>
+                >{{ contact.groupName }}</v-chip>
               </v-list-tile-content>
 
               <v-list-tile-action>
@@ -130,7 +130,7 @@
                       required
                     ></v-text-field>
                     <v-combobox
-                      v-model="newContact.group"
+                      v-model="newContact.groupName"
                       :items="groups"
                       label="Group"
                       small-chips
@@ -195,7 +195,7 @@ export default {
         email: null,
         avatar: null,
         phoneNumber: null,
-        group: null,
+        groupName: null,
         userID: this.$store.state.user.id
       },
       newContact: {
@@ -203,7 +203,7 @@ export default {
         email: null,
         avatar: null,
         phoneNumber: null,
-        group: null,
+        groupName: null,
         userID: this.$store.state.user.id
       },
       createContactDialog: false,
@@ -240,6 +240,7 @@ export default {
 
     async getAllContacts (userID) {
       this.contacts = (await ContactsService.getAllContacts(userID)).data
+      this.getGroups(userID)
     },
 
     showContact (contactID) {
@@ -255,9 +256,9 @@ export default {
       }
     },
 
-    async getGroups () {
+    async getGroups (userID) {
       try {
-        const groupList = (await GroupsService.getGroups()).data
+        const groupList = (await GroupsService.getGroups(userID)).data
         this.groups = groupList.map(group => group.name)
       } catch (err) {
         console.log(err)
@@ -266,7 +267,7 @@ export default {
   },
 
   mounted () {
-    this.getGroups()
+    this.getGroups(this.defaultContact.userID)
   },
 
   watch: {

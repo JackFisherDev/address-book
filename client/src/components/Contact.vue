@@ -85,7 +85,7 @@
                   label="Contact name"
                 ></v-text-field>
                 <v-combobox
-                  v-model="contact.group"
+                  v-model="contact.groupName"
                   :items="groups"
                   :readonly="!enabledEditMode"
                   label="Group"
@@ -191,7 +191,7 @@ export default {
     const { id } = this.$store.state.route.params
 
     this.setContact(id)
-    this.getGroups()
+    this.getGroups(this.$store.state.user.id)
   },
 
   methods: {
@@ -222,9 +222,9 @@ export default {
       }
     },
 
-    async getGroups () {
+    async getGroups (userID) {
       try {
-        const groupList = (await GroupsService.getGroups()).data
+        const groupList = (await GroupsService.getGroups(userID)).data
         this.groups = groupList.map(group => group.name)
       } catch (err) {
         console.log(err)
