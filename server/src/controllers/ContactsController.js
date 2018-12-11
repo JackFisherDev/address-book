@@ -19,6 +19,7 @@ async function addNewGroup (groupName, userID) {
 
 module.exports = {
   async getAllContacts (req, res) {
+    console.log('Query', req.query)
     try {
       let contacts = null
       const { userID, search } = req.query
@@ -29,7 +30,7 @@ module.exports = {
             userID,
             $or: [
               'name',
-              'groupID'
+              'groupName'
             ].map(key => ({
               [key]: {
                 $like: `%${search}%`
