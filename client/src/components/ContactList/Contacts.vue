@@ -24,6 +24,10 @@
           >
             <v-divider class="mb-3"></v-divider>
 
+            <v-list-tile v-if="!contacts.length">
+              <p class="d-block subheading">You don't have any contacts.</p>
+            </v-list-tile>
+
             <v-list-tile
               v-for="contact in contacts"
               :key="contact.id"
@@ -189,7 +193,7 @@ export default {
   },
   data () {
     return {
-      contacts: null,
+      contacts: [],
       defaultContact: {
         name: null,
         email: null,
@@ -282,5 +286,5 @@ export default {
 </script>
 
 <style scoped>
-
+  p.subheading { margin: 0 auto; }
 </style>

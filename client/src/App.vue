@@ -2,13 +2,10 @@
   <div id="app">
     <v-app>
       <app-header/>
-      <main>
-        <v-container
-          fluid
-          class="pa-0"
-        >
+      <main class="pt-3">
+        <transition name="fade" mode="out-in">
           <router-view/>
-        </v-container>
+        </transition>
       </main>
     </v-app>
   </div>
@@ -26,5 +23,15 @@ export default {
 </script>
 
 <style>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
 
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
+  }
 </style>
