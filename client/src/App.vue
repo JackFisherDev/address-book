@@ -3,7 +3,10 @@
     <v-app>
       <app-header/>
       <main class="pt-3">
-        <transition name="fade" mode="out-in">
+        <transition
+          name="slide"
+          mode="out-in"
+        >
           <router-view/>
         </transition>
       </main>
@@ -23,15 +26,16 @@ export default {
 </script>
 
 <style>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition-duration: 0.3s;
-    transition-property: opacity;
-    transition-timing-function: ease;
+  .slide-enter-active,
+  .slide-leave-active {
+    transition-duration: 0.5s;
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   }
 
-  .fade-enter,
-  .fade-leave-active {
-    opacity: 0
+  .slide-enter,
+  .slide-leave-active {
+    opacity: 0;
+    transform: translate(0, 2em);
   }
 </style>
