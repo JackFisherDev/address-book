@@ -28,7 +28,7 @@ export default {
 <style>
   .slide-enter-active,
   .slide-leave-active {
-    transition-duration: 0.5s;
+    transition-duration: 0.3s;
     transition-property: opacity, transform;
     transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   }

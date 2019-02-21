@@ -105,56 +105,93 @@
                     v-model="newContactForm"
                     lazy-validation
                   >
-                    <v-text-field
-                      v-model="newContact.name"
-                      :rules="nameRules"
-                      label="Contact name"
-                      prepend-icon="person"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="newContact.email"
-                      :rules="emailRules"
-                      label="E-mail"
-                      prepend-icon="email"
-                      required
-                    ></v-text-field>
-                    <v-text-field
+                    <v-layout
+                      row
+                      wrap
+                      stretch
+                    >
+                      <v-flex
+                        xs12
+                        sm4
+                        text-xs-center
+                      >
+                        <v-avatar
+                          :size="120"
+                          color="grey lighten-4"
+                        >
+                          <img src="https://randomuser.me/api/portraits/women/0.jpg" alt="avatar">
+                        </v-avatar>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                        sm8
+                        align-content-center
+                      >
+                        <v-text-field
+                          v-model="newContact.name"
+                          :rules="nameRules"
+                          label="Contact name"
+                          prepend-icon="person"
+                          required
+                        ></v-text-field>
+                        <v-combobox
+                          v-model="newContact.groupName"
+                          :items="groups"
+                          label="Group"
+                          small-chips
+                          search-input
+                          persistent-hint
+                          prepend-icon="group"
+                        >
+                          <template
+                            slot="selection"
+                            slot-scope="data"
+                          >
+                            <v-chip
+                              class="success"
+                              text-color="white"
+                              small
+                            >
+                              {{ data.item }}
+                            </v-chip>
+                          </template>
+                        </v-combobox>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout
+                      row
+                      wrap
+                    >
+                      <v-flex
+                        xs12
+                      >
+                        <v-text-field
+                          v-model="newContact.email"
+                          :rules="emailRules"
+                          label="E-mail"
+                          prepend-icon="email"
+                          required
+                        ></v-text-field>
+                      </v-flex>
+                      <v-flex
+                        xs12
+                      >
+                        <v-text-field
+                          v-model="newContact.phoneNumber"
+                          :rules="phoneNumberRules"
+                          return-masked-value
+                          mask="+################"
+                          label="Phone number"
+                          prepend-icon="phone"
+                          required
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>
+                    <!-- <v-text-field
                       v-model="newContact.avatar"
                       label="Avatar"
                       prepend-icon="photo"
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="newContact.phoneNumber"
-                      :rules="phoneNumberRules"
-                      return-masked-value
-                      mask="+################"
-                      label="Phone number"
-                      prepend-icon="phone"
-                      required
-                    ></v-text-field>
-                    <v-combobox
-                      v-model="newContact.groupName"
-                      :items="groups"
-                      label="Group"
-                      small-chips
-                      search-input
-                      persistent-hint
-                      prepend-icon="group"
-                    >
-                      <template
-                        slot="selection"
-                        slot-scope="data"
-                      >
-                        <v-chip
-                          class="success"
-                          text-color="white"
-                          small
-                        >
-                          {{ data.item }}
-                        </v-chip>
-                      </template>
-                    </v-combobox>
+                    ></v-text-field> -->
                   </v-form>
                 </v-flex>
               </v-layout>
