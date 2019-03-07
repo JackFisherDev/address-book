@@ -228,6 +228,7 @@ export default {
   components: {
     ContactSearch
   },
+
   data () {
     return {
       contacts: [],

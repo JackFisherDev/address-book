@@ -5,6 +5,7 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Contacts from '@/components/ContactList/Contacts'
 import Contact from '@/components/Contact'
+import Groups from '@/components/Groups'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/contact/:id',
       name: 'Contact',
       component: Contact
+    },
+    {
+      path: '/groups',
+      name: 'Groups',
+      component: Groups
     }
   ]
 })

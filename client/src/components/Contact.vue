@@ -84,30 +84,53 @@
                   :append-icon="enabledEditMode ? 'edit' : ''"
                   label="Contact name"
                 ></v-text-field>
-                <v-combobox
-                  v-model="contact.groupName"
-                  :items="groups"
-                  :readonly="!enabledEditMode"
-                  label="Group"
-                  small-chips
-                  search-input
-                  persistent-hint
-                  prepend-icon="group"
-                  append-icon="arrow_drop_down"
+                <v-layout
+                  align-center
                 >
-                  <template
-                    slot="selection"
-                    slot-scope="data"
-                  >
-                    <v-chip
-                      class="success"
-                      text-color="white"
-                      small
+                  <v-flex xs10>
+                    <v-combobox
+                      v-model="contact.groupName"
+                      :items="groups"
+                      :readonly="!enabledEditMode"
+                      label="Group"
+                      small-chips
+                      search-input
+                      persistent-hint
+                      prepend-icon="group"
+                      append-icon="arrow_drop_down"
                     >
-                      {{ data.item }}
-                    </v-chip>
-                  </template>
-                </v-combobox>
+                      <template
+                        slot="selection"
+                        slot-scope="data"
+                      >
+                        <v-chip
+                          class="success"
+                          text-color="white"
+                          small
+                        >
+                          {{ data.item }}
+                        </v-chip>
+                      </template>
+                    </v-combobox>
+                  </v-flex>
+                  <v-flex
+                    xs2
+                  >
+                    <v-tooltip top>
+                      <v-btn
+                        slot="activator"
+                        flat
+                        icon
+                        color="grey darken-1"
+                        route
+                        to="/groups"
+                      >
+                        <v-icon>settings</v-icon>
+                      </v-btn>
+                      <span>Manage grops</span>
+                    </v-tooltip>
+                  </v-flex>
+                </v-layout>
               </v-flex>
             </v-layout>
             <v-layout
