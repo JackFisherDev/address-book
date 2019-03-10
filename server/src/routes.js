@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const ContactsController = require('./controllers/ContactsController')
+const GroupsController = require('./controllers/GroupsController')
 
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
@@ -23,5 +24,7 @@ module.exports = (app) => {
     ContactsController.updateContact)
 
   app.get('/api/groups',
-    ContactsController.getGroups)
+    GroupsController.getGroups)
+  app.delete('/api/group/:id',
+    GroupsController.deleteGroups)
 }

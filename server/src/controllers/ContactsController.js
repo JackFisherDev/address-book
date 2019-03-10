@@ -4,7 +4,8 @@ async function addNewGroup (groupName, userID) {
   if (groupName) {
     const groupList = await Group.find({
       where: {
-        name: groupName
+        name: groupName,
+        userID
       }
     })
 
@@ -118,23 +119,6 @@ module.exports = {
     } catch (e) {
       res.status(500).send({
         error: 'Ooops! Sorry, something went wrong when trying to update the contact.'
-      })
-    }
-  },
-
-  async getGroups (req, res) {
-    try {
-      const { userID } = req.query
-      const groups = await Group.findAll({
-        where: {
-          userID
-        }
-      })
-
-      res.send(groups)
-    } catch (e) {
-      res.status(500).send({
-        error: 'Ooops! Sorry, something went wrong when trying to fetch groups.'
       })
     }
   }

@@ -70,10 +70,19 @@ export default {
   },
 
   methods: {
-    async getGroups (userID) {
+    async getAllGroups (userID) {
       try {
         this.groups = (await GroupsService.getGroups(userID)).data
         console.log(this.groups)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async deleteGroup (groupID) {
+      try {
+        await GroupsService.deleteGroup(groupID)
+        this.getAllGroups(this.userID)
       } catch (err) {
         console.log(err)
       }
@@ -81,7 +90,7 @@ export default {
   },
 
   mounted () {
-    this.getGroups(this.userID)
+    this.getAllGroups(this.userID)
   }
 }
 </script>
