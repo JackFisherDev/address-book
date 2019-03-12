@@ -15,6 +15,14 @@
       >
         My contacts
       </v-btn>
+      <v-btn
+        v-if="$store.state.isUserLoggedIn"
+        flat
+        route
+        to="/groups"
+      >
+        Manage groups
+      </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">

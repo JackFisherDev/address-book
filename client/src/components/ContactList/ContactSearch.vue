@@ -1,7 +1,7 @@
 <template>
   <v-toolbar
     flat
-    class="transparent"
+    class="transparent elevation-1"
   >
     <v-text-field
       v-model="search"

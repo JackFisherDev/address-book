@@ -72,8 +72,9 @@
             <v-flex
               xs12
               text-xs-center
-              class="pa-4"
+              class="pt-0 pb-3"
             >
+              <v-divider class="mb-3"></v-divider>
               <v-btn
                 dark
                 class="info"
@@ -325,4 +326,9 @@ export default {
 
 <style scoped>
   p.subheading { margin: 0 auto; }
+
+  .v-list {
+    max-height: 350px;
+    overflow-y: auto;
+  }
 </style>
