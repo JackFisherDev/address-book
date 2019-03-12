@@ -18,13 +18,15 @@ module.exports = (app) => {
     ContactsController.getContact)
   app.post('/api/book',
     ContactsController.createContact)
-  app.delete('/api/book/:id',
-    ContactsController.deleteContact)
   app.put('/api/book/:id',
     ContactsController.updateContact)
+  app.delete('/api/book/:id',
+    ContactsController.deleteContact)
 
   app.get('/api/groups',
     GroupsController.getGroups)
+  app.put('/api/group/:id',
+    GroupsController.updateGroup)
   app.delete('/api/group/:id',
-    GroupsController.deleteGroups)
+    GroupsController.deleteGroup)
 }

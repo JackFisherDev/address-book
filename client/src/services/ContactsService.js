@@ -18,11 +18,11 @@ export default {
     return Api().post('api/book', contact)
   },
 
-  deleteContact (contactID) {
-    return Api().delete(`api/book/${contactID}`)
-  },
-
   updateContact (contact) {
     return Api().put(`api/book/${contact.id}`, contact)
+  },
+
+  deleteContact (contactID) {
+    return Api().delete(`api/book/${contactID}`)
   }
 }

@@ -7,6 +7,10 @@ export default {
     })
   },
 
+  updateGroup (group) {
+    return Api().put(`/api/group/${group.id}`, group)
+  },
+
   deleteGroup (groupID) {
     return Api().delete(`/api/group/${groupID}`)
   }

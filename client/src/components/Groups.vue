@@ -32,23 +32,77 @@
             >
               <v-list-tile-content>
                 <v-chip
+                  v-if="isEditable !== group.id"
                   small
                   :class="{'success': group.name !== 'Family' && group.name !== 'Friend'}"
                   text-color="white"
                 >{{ group.name }}</v-chip>
+                <v-text-field
+                  v-if="isEditable === group.id"
+                  v-model="newGroupName"
+                  class="pt-0"
+                ></v-text-field>
               </v-list-tile-content>
 
               <v-list-tile-action v-if="group.name !== 'Family' && group.name !== 'Friend'">
-                <v-tooltip top>
-                  <v-btn
-                    slot="activator"
-                    icon
-                    @click.stop="deleteGroup(group.id)"
+                <v-layout>
+                  <v-tooltip
+                    v-if="isEditable === group.id"
+                    class="ml-2 mr-2"
+                    top
                   >
-                    <v-icon :color="'grey'">delete</v-icon>
-                  </v-btn>
-                  <span>Delete</span>
-                </v-tooltip>
+                    <v-btn
+                      slot="activator"
+                      icon
+                      @click.stop="updateGroupName(group)"
+                    >
+                      <v-icon :color="'grey'">save</v-icon>
+                    </v-btn>
+                    <span>Save</span>
+                  </v-tooltip>
+                  <v-tooltip
+                    v-if="isEditable === group.id"
+                    class="ml-2 mr-2"
+                    top
+                  >
+                    <v-btn
+                      slot="activator"
+                      icon
+                      @click.stop="cancelEditGroupName()"
+                    >
+                      <v-icon :color="'grey'">cancel</v-icon>
+                    </v-btn>
+                    <span>Cancel</span>
+                  </v-tooltip>
+                  <v-tooltip
+                    v-if="isEditable !== group.id"
+                    class="ml-2 mr-2"
+                    top
+                  >
+                    <v-btn
+                      slot="activator"
+                      icon
+                      @click.stop="editGroupName(group.id)"
+                    >
+                      <v-icon :color="'grey'">edit</v-icon>
+                    </v-btn>
+                    <span>Edit</span>
+                  </v-tooltip>
+                  <v-tooltip
+                    v-if="isEditable !== group.id"
+                    class="ml-2 mr-2"
+                    top
+                  >
+                    <v-btn
+                      slot="activator"
+                      icon
+                      @click.stop="deleteGroup(group.id)"
+                    >
+                      <v-icon :color="'grey'">delete</v-icon>
+                    </v-btn>
+                    <span>Delete</span>
+                  </v-tooltip>
+                </v-layout>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -65,11 +119,42 @@ export default {
   data () {
     return {
       groups: [],
-      userID: this.$store.state.user.id
+      userID: this.$store.state.user.id,
+      newGroupName: '',
+      isEditable: null
     }
   },
 
   methods: {
+    editGroupName (groupID) {
+      this.groups.forEach((group) => {
+        if (groupID === group.id) this.newGroupName = group.name
+      })
+      this.isEditable = groupID
+    },
+
+    cancelEditGroupName () {
+      this.isEditable = null
+      this.newGroupName = ''
+    },
+
+    async updateGroupName (group) {
+      let updatedGroup = Object.assign({}, group)
+      updatedGroup.name = this.newGroupName
+
+      try {
+        await GroupsService.updateGroup(updatedGroup)
+          .then((response) => {
+            this.isEditable = null
+            this.newGroupName = ''
+
+            this.getAllGroups(this.userID)
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
     async getAllGroups (userID) {
       try {
         this.groups = (await GroupsService.getGroups(userID)).data

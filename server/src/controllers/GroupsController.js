@@ -18,7 +18,23 @@ module.exports = {
     }
   },
 
-  async deleteGroups (req, res) {
+  async updateGroup (req, res) {
+    try {
+      await Group.update(req.body, {
+        where: {
+          id: req.params.id
+        }
+      })
+
+      res.send('Group has been updated')
+    } catch (e) {
+      res.status(500).send({
+        error: 'Ooops! Sorry, something went wrong when trying to update group.'
+      })
+    }
+  },
+
+  async deleteGroup (req, res) {
     try {
       await Group.destroy({
         where: {
