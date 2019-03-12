@@ -26,6 +26,10 @@
           >
             <v-divider class="mb-3"></v-divider>
 
+            <v-list-tile v-if="!groups.length">
+              <p class="d-block subheading">You don't have any group.</p>
+            </v-list-tile>
+
             <v-list-tile
               v-for="group in groups"
               :key="group.id"
@@ -181,5 +185,5 @@ export default {
 </script>
 
 <style scoped>
-
+  p.subheading { margin: 0 auto; }
 </style>
