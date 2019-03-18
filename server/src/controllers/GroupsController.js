@@ -1,4 +1,5 @@
 const { Group } = require('../models')
+const { Contact } = require('../models')
 
 module.exports = {
   async getGroups (req, res) {
@@ -25,6 +26,16 @@ module.exports = {
           id: req.params.id
         }
       })
+
+      await Contact.update(
+        { groupName: req.body.name },
+        {
+          where: {
+            userID: req.body.userID,
+            groupName: req.body.oldGroupName
+          }
+        }
+      )
 
       res.send('Group has been updated')
     } catch (e) {

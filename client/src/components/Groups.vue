@@ -144,6 +144,8 @@ export default {
 
     async updateGroupName (group) {
       let updatedGroup = Object.assign({}, group)
+
+      updatedGroup.oldGroupName = updatedGroup.name
       updatedGroup.name = this.newGroupName
 
       try {
@@ -162,7 +164,6 @@ export default {
     async getAllGroups (userID) {
       try {
         this.groups = (await GroupsService.getGroups(userID)).data
-        console.log(this.groups)
       } catch (err) {
         console.log(err)
       }
