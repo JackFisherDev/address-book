@@ -19,6 +19,18 @@ module.exports = {
     }
   },
 
+  async createGroup (req, res) {
+    try {
+      const contact = await Group.create(req.body)
+
+      res.send(contact)
+    } catch (e) {
+      res.status(500).send({
+        error: 'Ooops! Sorry, something went wrong when trying to create a contact.'
+      })
+    }
+  },
+
   async updateGroup (req, res) {
     try {
       await Group.update(req.body, {

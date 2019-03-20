@@ -2,7 +2,7 @@
   <v-container
     grid-list-md
     text-xs-center
-    class="mt-5 pt-4"
+    class="mt-4 pt-4"
   >
     <v-layout
       row
@@ -272,6 +272,7 @@ export default {
 
       try {
         await ContactsService.createContact(this.newContact)
+        
         this.createContactDialog = false
         this.newContact = Object.assign({}, this.defaultContact)
         this.$refs.form.reset()

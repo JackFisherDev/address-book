@@ -5,7 +5,7 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Contacts from '@/components/ContactList/Contacts'
 import Contact from '@/components/Contact'
-import Groups from '@/components/Groups'
+import Groups from '@/components/GroupList/Groups'
 
 Vue.use(Router)
 

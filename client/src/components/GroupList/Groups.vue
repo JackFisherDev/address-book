@@ -15,11 +15,9 @@
         md6
         text-xs-left
       >
-        <v-card class="pb-4">
-          <v-card-title class="info white--text">
-            <span class="headline">Your groups</span>
-            <v-spacer></v-spacer>
-          </v-card-title>
+        <v-card>
+          <group-search />
+
           <v-list
             class="pt-0"
             dense
@@ -110,22 +108,114 @@
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
+          <v-layout
+            row
+            justify-center
+          >
+            <v-flex
+              xs12
+              text-xs-center
+              class="pt-0 pb-3"
+            >
+              <v-divider class="mb-3"></v-divider>
+              <v-btn
+                dark
+                class="info"
+                round
+                @click="createGroupDialog = true"
+              >
+                Add group
+              </v-btn>
+            </v-flex>
+          </v-layout>
         </v-card>
       </v-flex>
+
+      <v-dialog
+        v-model="createGroupDialog"
+        persistent
+        max-width="600px"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="headline">New Group</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <v-form
+                    ref="form"
+                    v-model="newGroupForm"
+                    lazy-validation
+                  >
+                    <v-layout
+                      row
+                      wrap
+                      stretch
+                    >
+                      <v-flex
+                        xs12
+                        sm8
+                        align-content-center
+                      >
+                        <v-text-field
+                          v-model="newGroup.name"
+                          :rules="[!!newGroup.name || 'This field is required.']"
+                          label="Group name"
+                          prepend-icon="group"
+                          required
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>
+                  </v-form>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions class="pl-3 pr-3 pb-3">
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click="createGroupDialog = false"
+            >
+              Close
+            </v-btn>
+            <v-btn
+              class="info"
+              @click="createGroup"
+            >
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import GroupsService from '@/services/GroupsService'
+import GroupSearch from './GroupSearch'
 
 export default {
+  components: {
+    GroupSearch
+  },
+
   data () {
     return {
       groups: [],
       userID: this.$store.state.user.id,
       newGroupName: '',
-      isEditable: null
+      isEditable: null,
+      createGroupDialog: false,
+      newGroup: {
+        name: '',
+        userID: this.$store.state.user.id
+      },
+      newGroupForm: true
     }
   },
 
@@ -140,6 +230,20 @@ export default {
     cancelEditGroupName () {
       this.isEditable = null
       this.newGroupName = ''
+    },
+
+    async createGroup () {
+      if (!this.$refs.form.validate()) return
+
+      try {
+        await GroupsService.createGroup(this.newGroup)
+        
+        this.createGroupDialog = false
+        this.$refs.form.reset()
+        this.getAllGroups(this.userID)
+      } catch (err) {
+        console.log(err)
+      }
     },
 
     async updateGroupName (group) {

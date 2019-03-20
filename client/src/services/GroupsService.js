@@ -7,6 +7,10 @@ export default {
     })
   },
 
+  createGroup (group) {
+    return Api().post('/api/group', group)
+  },
+
   updateGroup (group) {
     return Api().put(`/api/group/${group.id}`, group)
   },

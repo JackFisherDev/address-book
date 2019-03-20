@@ -25,6 +25,8 @@ module.exports = (app) => {
 
   app.get('/api/groups',
     GroupsController.getGroups)
+  app.post('/api/group',
+    GroupsController.createGroup)
   app.put('/api/group/:id',
     GroupsController.updateGroup)
   app.delete('/api/group/:id',
