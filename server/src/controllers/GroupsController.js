@@ -21,9 +21,23 @@ module.exports = {
 
   async createGroup (req, res) {
     try {
-      const contact = await Group.create(req.body)
+      await Group.count({
+        where: {
+          name: req.body.name,
+          userID: req.body.userID
+        }
+      })
+        .then(count => {
+          if (!count) {
+            const group = Group.create(req.body)
 
-      res.send(contact)
+            res.send(group)
+          } else {
+            res.status(500).send({
+              error: 'This group already exists.'
+            })
+          }
+        })
     } catch (e) {
       res.status(500).send({
         error: 'Ooops! Sorry, something went wrong when trying to create a contact.'
