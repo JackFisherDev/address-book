@@ -33,7 +33,7 @@ module.exports = {
 
             res.send(group)
           } else {
-            res.status(500).send({
+            res.status(400).send({
               error: 'This group already exists.'
             })
           }
