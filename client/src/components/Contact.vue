@@ -122,6 +122,7 @@
                         flat
                         icon
                         color="grey darken-1"
+                        class="a-spin"
                         route
                         to="/groups"
                       >

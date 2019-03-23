@@ -272,7 +272,7 @@ export default {
 
       try {
         await ContactsService.createContact(this.newContact)
-        
+
         this.createContactDialog = false
         this.newContact = Object.assign({}, this.defaultContact)
         this.$refs.form.reset()

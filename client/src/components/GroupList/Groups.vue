@@ -57,6 +57,7 @@
                       slot="activator"
                       icon
                       @click.stop="updateGroupName(group)"
+                      class="a-sway"
                     >
                       <v-icon :color="'grey'">save</v-icon>
                     </v-btn>
@@ -71,6 +72,7 @@
                       slot="activator"
                       icon
                       @click.stop="cancelEditGroupName()"
+                      class="a-spin"
                     >
                       <v-icon :color="'grey'">cancel</v-icon>
                     </v-btn>
@@ -85,6 +87,7 @@
                       slot="activator"
                       icon
                       @click.stop="editGroupName(group.id)"
+                      class="a-jump-up"
                     >
                       <v-icon :color="'grey'">edit</v-icon>
                     </v-btn>
@@ -99,6 +102,7 @@
                       slot="activator"
                       icon
                       @click.stop="deleteGroup(group.id)"
+                      class="a-jump-up"
                     >
                       <v-icon :color="'grey'">delete</v-icon>
                     </v-btn>
@@ -237,7 +241,7 @@ export default {
 
       try {
         await GroupsService.createGroup(this.newGroup)
-        
+
         this.createGroupDialog = false
         this.$refs.form.reset()
         this.getAllGroups(this.userID)
