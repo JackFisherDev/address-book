@@ -289,6 +289,15 @@ export default {
 
   mounted () {
     this.getAllGroups(this.userID)
+  },
+
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (val) {
+        this.groups = (await GroupsService.getGroups(this.userID, val)).data
+      }
+    }
   }
 }
 </script>

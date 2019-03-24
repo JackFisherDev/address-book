@@ -4,12 +4,29 @@ const { Contact } = require('../models')
 module.exports = {
   async getGroups (req, res) {
     try {
-      const { userID } = req.query
-      const groups = await Group.findAll({
-        where: {
-          userID
-        }
-      })
+      let groups = null
+      const { userID, search } = req.query
+
+      if (search) {
+        groups = await Group.findAll({
+          where: {
+            userID,
+            $or: [
+              'name'
+            ].map(key => ({
+              [key]: {
+                $like: `%${search}%`
+              }
+            }))
+          }
+        })
+      } else {
+        groups = await Group.findAll({
+          where: {
+            userID
+          }
+        })
+      }
 
       res.send(groups)
     } catch (e) {

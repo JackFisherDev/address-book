@@ -22,24 +22,24 @@ export default {
   },
 
   watch: {
-    // search: _.debounce(async function (val) {
-    //   const route = { name: 'Contacts' }
+    search: _.debounce(async function (val) {
+      const route = { name: 'Groups' }
 
-    //   if (this.search !== '') {
-    //     route.query = {
-    //       search: this.search
-    //     }
-    //   }
+      if (this.search !== '') {
+        route.query = {
+          search: this.search
+        }
+      }
 
-    //   this.$router.push(route)
-    // }, 500),
-    
-    // '$route.query.search': {
-    //   immediate: true,
-    //   handler (val) {
-    //     this.search = val
-    //   }
-    // }
+      this.$router.push(route)
+    }, 500),
+
+    '$route.query.search': {
+      immediate: true,
+      handler (val) {
+        this.search = val
+      }
+    }
   }
 }
 </script>

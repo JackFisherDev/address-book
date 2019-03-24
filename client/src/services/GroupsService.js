@@ -1,9 +1,12 @@
 import Api from '@/services/Api'
 
 export default {
-  getGroups (userID) {
+  getGroups (userID, searchVal) {
     return Api().get('api/groups', {
-      params: { userID }
+      params: {
+        userID,
+        search: searchVal
+      }
     })
   },
 
