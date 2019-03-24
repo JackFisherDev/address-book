@@ -276,14 +276,14 @@ export default {
         this.createContactDialog = false
         this.newContact = Object.assign({}, this.defaultContact)
         this.$refs.form.reset()
-        this.getAllContacts(this.defaultContact.userID)
+        this.getContacts(this.defaultContact.userID)
       } catch (err) {
         console.log(err)
       }
     },
 
-    async getAllContacts (userID) {
-      this.contacts = (await ContactsService.getAllContacts(userID)).data
+    async getContacts (userID) {
+      this.contacts = (await ContactsService.getContacts(userID)).data
       this.getGroups(userID)
     },
 
@@ -294,7 +294,7 @@ export default {
     async deleteContact (contactID) {
       try {
         await ContactsService.deleteContact(contactID)
-        this.getAllContacts(this.defaultContact.userID)
+        this.getContacts(this.defaultContact.userID)
       } catch (err) {
         console.log(err)
       }
@@ -318,7 +318,7 @@ export default {
     '$route.query.search': {
       immediate: true,
       async handler (val) {
-        this.contacts = (await ContactsService.getAllContacts(this.defaultContact.userID, val)).data
+        this.contacts = (await ContactsService.getContacts(this.defaultContact.userID, val)).data
       }
     }
   }

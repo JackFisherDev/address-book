@@ -13,7 +13,7 @@ module.exports = (app) => {
     AuthenticationController.login)
 
   app.get('/api/book',
-    ContactsController.getAllContacts)
+    ContactsController.getContacts)
   app.get('/api/book/:id',
     ContactsController.getContact)
   app.post('/api/book',

@@ -19,7 +19,7 @@ async function addNewGroup (groupName, userID) {
 }
 
 module.exports = {
-  async getAllContacts (req, res) {
+  async getContacts (req, res) {
     console.log('Query', req.query)
     try {
       let contacts = null

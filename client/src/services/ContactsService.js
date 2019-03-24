@@ -1,7 +1,7 @@
 import Api from '@/services/Api'
 
 export default {
-  getAllContacts (userID, searchVal) {
+  getContacts (userID, searchVal) {
     return Api().get('api/book', {
       params: {
         userID,
