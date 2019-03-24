@@ -57,6 +57,7 @@
                     slot="activator"
                     icon
                     @click.stop="deleteContact(contact.id)"
+                    class="a-jump-up"
                   >
                     <v-icon :color="'grey'">delete</v-icon>
                   </v-btn>
