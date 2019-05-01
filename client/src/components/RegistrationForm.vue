@@ -63,6 +63,7 @@ export default {
       error: null
     }
   },
+  
   methods: {
     async register () {
       this.error = null
@@ -80,7 +81,7 @@ export default {
         this.password = ''
 
         this.$router.push({
-          name: 'Contacts'
+          name: 'ContactsList'
         })
       } catch (err) {
         this.error = err.response.data.error

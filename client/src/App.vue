@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <app-header/>
+      <TheHeader />
       <main class="pt-3">
         <transition
           name="slide"
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import AppHeader from '@/components/Header'
+import TheHeader from '@/components/TheHeader'
 
 export default {
   name: 'App',
   components: {
-    AppHeader
+    TheHeader
   }
 }
 </script>

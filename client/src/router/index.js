@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Register from '@/components/Register'
-import Login from '@/components/Login'
-import Contacts from '@/components/ContactList/Contacts'
-import Contact from '@/components/Contact'
-import Groups from '@/components/GroupList/Groups'
+import HomePage from '@/components/HomePage'
+import RegistrationForm from '@/components/RegistrationForm'
+import LoginForm from '@/components/LoginForm'
+import ContactsList from '@/components/ContactsList/ContactsList'
+import ContactProfile from '@/components/ContactProfile'
+import GroupsList from '@/components/GroupsList/GroupsList'
 
 Vue.use(Router)
 
@@ -13,33 +13,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Root',
-      component: Home
+      name: 'HomePage',
+      component: HomePage
     },
     {
       path: '/register',
-      name: 'Register',
-      component: Register
+      name: 'RegistrationForm',
+      component: RegistrationForm
     },
     {
       path: '/login',
-      name: 'Login',
-      component: Login
+      name: 'LoginForm',
+      component: LoginForm
     },
     {
       path: '/contacts',
-      name: 'Contacts',
-      component: Contacts
+      name: 'ContactsList',
+      component: ContactsList
     },
     {
       path: '/contact/:id',
-      name: 'Contact',
-      component: Contact
+      name: 'ContactProfile',
+      component: ContactProfile
     },
     {
       path: '/groups',
-      name: 'Groups',
-      component: Groups
+      name: 'GroupsList',
+      component: GroupsList
     }
   ]
 })

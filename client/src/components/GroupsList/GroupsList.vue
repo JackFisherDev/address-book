@@ -16,7 +16,7 @@
         text-xs-left
       >
         <v-card>
-          <group-search />
+          <GroupsListSearch />
 
           <v-list
             class="pt-0"
@@ -201,11 +201,11 @@
 
 <script>
 import GroupsService from '@/services/GroupsService'
-import GroupSearch from './GroupSearch'
+import GroupsListSearch from './GroupsListSearch'
 
 export default {
   components: {
-    GroupSearch
+    GroupsListSearch
   },
 
   data () {
@@ -221,6 +221,19 @@ export default {
       },
       newGroupForm: true
     }
+  },
+
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (val) {
+        this.groups = (await GroupsService.getGroups(this.userID, val)).data
+      }
+    }
+  },
+
+  mounted () {
+    this.getAllGroups(this.userID)
   },
 
   methods: {
@@ -283,19 +296,6 @@ export default {
         this.getAllGroups(this.userID)
       } catch (err) {
         console.log(err)
-      }
-    }
-  },
-
-  mounted () {
-    this.getAllGroups(this.userID)
-  },
-
-  watch: {
-    '$route.query.search': {
-      immediate: true,
-      async handler (val) {
-        this.groups = (await GroupsService.getGroups(this.userID, val)).data
       }
     }
   }

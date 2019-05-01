@@ -16,7 +16,7 @@
         text-xs-left
       >
         <v-card>
-          <contact-search />
+          <ContactsListSearch />
 
           <v-list
             class="pt-0"
@@ -224,11 +224,11 @@
 <script>
 import ContactsService from '@/services/ContactsService'
 import GroupsService from '@/services/GroupsService'
-import ContactSearch from './ContactSearch'
+import ContactsListSearch from './ContactsListSearch'
 
 export default {
   components: {
-    ContactSearch
+    ContactsListSearch
   },
 
   data () {
@@ -265,6 +265,19 @@ export default {
         pN => !!pN || 'This field is required.'
       ]
     }
+  },
+
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (val) {
+        this.contacts = (await ContactsService.getContacts(this.defaultContact.userID, val)).data
+      }
+    }
+  },
+
+  mounted () {
+    this.getGroups(this.defaultContact.userID)
   },
 
   methods: {
@@ -307,19 +320,6 @@ export default {
         this.groups = groupList.map(group => group.name)
       } catch (err) {
         console.log(err)
-      }
-    }
-  },
-
-  mounted () {
-    this.getGroups(this.defaultContact.userID)
-  },
-
-  watch: {
-    '$route.query.search': {
-      immediate: true,
-      async handler (val) {
-        this.contacts = (await ContactsService.getContacts(this.defaultContact.userID, val)).data
       }
     }
   }

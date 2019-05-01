@@ -210,7 +210,7 @@ export default {
       ]
     }
   },
-
+  
   async mounted () {
     const { id } = this.$store.state.route.params
 
