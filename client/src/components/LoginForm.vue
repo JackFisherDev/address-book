@@ -60,7 +60,7 @@ export default {
       error: null
     }
   },
-  
+
   methods: {
     async login () {
       this.error = null

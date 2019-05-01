@@ -23,7 +23,7 @@ export default {
 
   watch: {
     search: _.debounce(async function (val) {
-      const route = { name: 'Contacts' }
+      const route = { name: 'ContactsList' }
 
       if (this.search !== '') {
         route.query = {
@@ -33,7 +33,7 @@ export default {
 
       this.$router.push(route)
     }, 500),
-    
+
     '$route.query.search': {
       immediate: true,
       handler (val) {

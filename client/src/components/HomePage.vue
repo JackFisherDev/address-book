@@ -20,7 +20,7 @@
 <script>
 export default {
   name: 'HomePage',
-  
+
   data () {
     return {
       screenHeight: 0

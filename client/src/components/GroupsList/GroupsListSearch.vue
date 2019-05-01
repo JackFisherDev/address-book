@@ -23,7 +23,7 @@ export default {
 
   watch: {
     search: _.debounce(async function (val) {
-      const route = { name: 'Groups' }
+      const route = { name: 'GroupsList' }
 
       if (this.search !== '') {
         route.query = {
