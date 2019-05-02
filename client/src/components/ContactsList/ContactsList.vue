@@ -123,6 +123,7 @@
                         >
                           <img src="https://randomuser.me/api/portraits/women/0.jpg" alt="avatar">
                         </v-avatar>
+                        <input type="file" name="file">
                       </v-flex>
                       <v-flex
                         xs12

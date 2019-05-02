@@ -20,7 +20,6 @@ async function addNewGroup (groupName, userID) {
 
 module.exports = {
   async getContacts (req, res) {
-    console.log('Query', req.query)
     try {
       let contacts = null
       const { userID, search } = req.query
@@ -72,12 +71,20 @@ module.exports = {
   },
 
   async createContact (req, res) {
+    console.log('file', req.file)
     try {
-      const { groupName, userID } = req.body
+      const { name, email, phoneNumber, groupName, userID } = req.body
 
       addNewGroup(groupName, userID)
 
-      const contact = await Contact.create(req.body)
+      const contact = await Contact.create({
+        name,
+        avatar: req.file.path,
+        email,
+        phoneNumber,
+        groupName,
+        userID
+      })
 
       res.send(contact)
     } catch (e) {
