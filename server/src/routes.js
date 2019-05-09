@@ -14,7 +14,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, false)
   }
 }
-const upload = multer({ 
+const upload = multer({
   storage,
   limit: {
     fileSize: 1024 * 1024 * 5
@@ -32,7 +32,6 @@ module.exports = (app) => {
   app.post('/register',
     AuthenticationControllerPolicy.register,
     AuthenticationController.register)
-
   app.post('/login',
     AuthenticationController.login)
 

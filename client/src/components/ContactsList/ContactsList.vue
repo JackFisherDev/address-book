@@ -119,9 +119,10 @@
                       >
                         <v-avatar
                           :size="120"
-                          color="grey lighten-4"
+                          color="grey lighten-4 a-sway"
                         >
-                          <img src="https://randomuser.me/api/portraits/women/0.jpg" alt="avatar">
+                          <img src="/static/images/default_avatar.svg" alt="avatar">
+                          <v-icon absolute>add_a_photo</v-icon>
                         </v-avatar>
                         <input type="file" name="file">
                       </v-flex>
@@ -333,5 +334,23 @@ export default {
   .v-list {
     max-height: 350px;
     overflow-y: auto;
+  }
+
+  .v-avatar img {
+    transition: opacity .2s ease-in-out;
+  }
+  .v-avatar .v-icon {
+    opacity: 0;
+    position: absolute;
+  }
+
+  .v-avatar:hover {
+    cursor: pointer;
+  }
+  .v-avatar:hover img {
+    opacity: .2;
+  }
+  .v-avatar:hover .v-icon {
+    opacity: 1;
   }
 </style>
