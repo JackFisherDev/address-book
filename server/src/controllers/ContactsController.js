@@ -1,4 +1,7 @@
 const { Contact, Group } = require('../models')
+// TODO: find a solution to resolve url's for avatars
+const CLIENT_URL = 'http://localhost:8080'
+const SERVER_URL = 'http://localhost:8081/'
 
 async function addNewGroup (groupName, userID) {
   if (groupName) {
@@ -71,15 +74,18 @@ module.exports = {
   },
 
   async createContact (req, res) {
-    console.log('file', req.file)
+    console.log('avatar file', req.body, req.file)
     try {
       const { name, email, phoneNumber, groupName, userID } = req.body
+      const avatar = req.file
+        ? SERVER_URL + req.file.path
+        : CLIENT_URL + req.body.avatar
 
       addNewGroup(groupName, userID)
 
       const contact = await Contact.create({
         name,
-        avatar: req.file.path,
+        avatar,
         email,
         phoneNumber,
         groupName,

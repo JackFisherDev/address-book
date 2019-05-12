@@ -120,11 +120,18 @@
                         <v-avatar
                           :size="120"
                           color="grey lighten-4 a-sway"
+                          @click="onPickFile"
                         >
-                          <img src="/static/images/default_avatar.svg" alt="avatar">
+                          <img :src="avatarUrl" alt="avatar">
                           <v-icon absolute>add_a_photo</v-icon>
                         </v-avatar>
-                        <input type="file" name="file">
+                        <input
+                          type="file"
+                          name="avatar"
+                          ref="fileInput"
+                          accept="image/*"
+                          @change="onFilePicked"
+                        >
                       </v-flex>
                       <v-flex
                         xs12
@@ -191,11 +198,6 @@
                         ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <!-- <v-text-field
-                      v-model="newContact.avatar"
-                      label="Avatar"
-                      prepend-icon="photo"
-                    ></v-text-field> -->
                   </v-form>
                 </v-flex>
               </v-layout>
@@ -206,7 +208,7 @@
             <v-btn
               color="blue darken-1"
               flat
-              @click="createContactDialog = false"
+              @click="closeContactDialog"
             >
               Close
             </v-btn>
@@ -265,7 +267,10 @@ export default {
       ],
       phoneNumberRules: [
         pN => !!pN || 'This field is required.'
-      ]
+      ],
+      avatarUrl: '/static/images/default_avatar.svg',
+      defaultAvatarUrl: '/static/images/default_avatar.svg',
+      av: null
     }
   },
 
@@ -286,12 +291,18 @@ export default {
     async createContact () {
       if (!this.$refs.form.validate()) return
 
-      try {
-        await ContactsService.createContact(this.newContact)
+      let contact = new FormData()
+      Object.keys(this.newContact).map(prop => {
+        if (this.newContact[prop]) {
+          contact.append(prop, this.newContact[prop])
+        }
+      })
+      contact.append('avatar', this.$refs.fileInput.files[0] || this.defaultAvatarUrl)
 
-        this.createContactDialog = false
-        this.newContact = Object.assign({}, this.defaultContact)
-        this.$refs.form.reset()
+      try {
+        await ContactsService.createContact(contact)
+
+        this.closeContactDialog()
         this.getContacts(this.defaultContact.userID)
       } catch (err) {
         console.log(err)
@@ -323,6 +334,33 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+
+    closeContactDialog () {
+      this.createContactDialog = false
+      this.newContact = Object.assign({}, this.defaultContact)
+      this.avatarUrl = this.defaultAvatarUrl
+      this.$refs.fileInput.value = ''
+      this.$refs.form.reset()
+    },
+
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+
+    onFilePicked (e) {
+      const files = e.target.files
+      let fileName = files[0].name
+
+      if (fileName.lastIndexOf('.') <= 0) {
+        return alert('Please add a valid file!')
+      }
+
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.avatarUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
     }
   }
 }
@@ -336,21 +374,29 @@ export default {
     overflow-y: auto;
   }
 
-  .v-avatar img {
+  .v-chip--small {
+    height: 20px;
+  }
+
+  form .v-avatar img {
     transition: opacity .2s ease-in-out;
   }
-  .v-avatar .v-icon {
+  form .v-avatar .v-icon {
     opacity: 0;
     position: absolute;
   }
 
-  .v-avatar:hover {
+  form .v-avatar:hover {
     cursor: pointer;
   }
-  .v-avatar:hover img {
+  form .v-avatar:hover img {
     opacity: .2;
   }
-  .v-avatar:hover .v-icon {
+  form .v-avatar:hover .v-icon {
     opacity: 1;
+  }
+
+  input[type=file] {
+    display: none;
   }
 </style>
