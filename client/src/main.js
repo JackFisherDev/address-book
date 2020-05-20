@@ -1,6 +1,7 @@
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VueCompositionApi from '@vue/composition-api'
 import { sync } from 'vuex-router-sync'
 import 'vuetify/dist/vuetify.min.css'
 import App from './App'
@@ -9,6 +10,7 @@ import store from '@/store/store'
 
 Vue.config.productionTip = false
 
+Vue.use(VueCompositionApi)
 Vue.use(Vuetify, {
   iconfont: 'mdi'
 })
