@@ -1,35 +1,15 @@
 <template>
-  <v-container
-    grid-list-md
-    text-xs-center
-    class="mt-4"
-  >
-    <v-layout
-      row
-      justify-center
-      class="mt-3"
-    >
-      <v-flex
-        xs12
-        sm8
-        md6
-        text-xs-left
-      >
+  <v-container grid-list-md text-xs-center class="mt-4">
+    <v-layout row justify-center class="mt-3">
+      <v-flex xs12 sm8 md6 text-xs-left>
         <v-card class="pb-4">
           <v-card-title class="info white--text">
-            <span class="headline">{{contact.name}}</span>
+            <span class="headline">{{ contact.name }}</span>
 
-            <v-spacer></v-spacer>
+            <v-spacer />
 
-            <v-menu
-              bottom
-              left
-            >
-              <v-btn
-                slot="activator"
-                icon
-                dark
-              >
+            <v-menu bottom left>
+              <v-btn slot="activator" icon dark>
                 <v-icon>more_vert</v-icon>
               </v-btn>
 
@@ -43,39 +23,14 @@
               </v-list>
             </v-menu>
           </v-card-title>
-          <v-form
-            ref="contactForm"
-            v-model="contactForm"
-            lazy-validation
-          >
-            <v-layout
-              row
-              wrap
-              stretch
-              class="mt-3"
-            >
-              <v-flex
-                xs12
-                sm4
-                text-xs-center
-                class="pl-4 pr-4"
-              >
-                <v-avatar
-                  :size="120"
-                  color="grey lighten-4"
-                >
-                  <img
-                    :src="contact.avatar"
-                    :alt="contact.name"
-                  >
+          <v-form ref="contactForm" v-model="contactForm" lazy-validation>
+            <v-layout row wrap stretch class="mt-3">
+              <v-flex xs12 sm4 text-xs-center class="pl-4 pr-4">
+                <v-avatar :size="120" color="grey lighten-4">
+                  <img :src="contact.avatar" :alt="contact.name" />
                 </v-avatar>
               </v-flex>
-              <v-flex
-                xs12
-                sm8
-                class="pl-4 pr-4"
-                align-content-center
-              >
+              <v-flex xs12 sm8 class="pl-4 pr-4" align-content-center>
                 <v-text-field
                   v-model="contact.name"
                   :rules="nameRules"
@@ -83,10 +38,8 @@
                   prepend-icon="person"
                   :append-icon="enabledEditMode ? 'edit' : ''"
                   label="Contact name"
-                ></v-text-field>
-                <v-layout
-                  align-center
-                >
+                />
+                <v-layout align-center>
                   <v-flex xs10>
                     <v-combobox
                       v-model="contact.groupName"
@@ -99,23 +52,14 @@
                       prepend-icon="group"
                       append-icon="arrow_drop_down"
                     >
-                      <template
-                        slot="selection"
-                        slot-scope="data"
-                      >
-                        <v-chip
-                          class="success"
-                          text-color="white"
-                          small
-                        >
+                      <template slot="selection" slot-scope="data">
+                        <v-chip class="success" text-color="white" small>
                           {{ data.item }}
                         </v-chip>
                       </template>
                     </v-combobox>
                   </v-flex>
-                  <v-flex
-                    xs2
-                  >
+                  <v-flex xs2>
                     <v-tooltip top>
                       <v-btn
                         slot="activator"
@@ -134,15 +78,11 @@
                 </v-layout>
               </v-flex>
             </v-layout>
-            <v-layout
-              row
-              class="mt-3"
-            >
-              <v-flex
-                xs12
-                class="pl-4 pr-4"
-              >
-                <h6 class="title mt-2 mb-3">Contact info</h6>
+            <v-layout row class="mt-3">
+              <v-flex xs12 class="pl-4 pr-4">
+                <h6 class="title mt-2 mb-3">
+                  Contact info
+                </h6>
                 <div>
                   <v-text-field
                     v-model="contact.email"
@@ -151,7 +91,7 @@
                     prepend-icon="email"
                     :append-icon="enabledEditMode ? 'edit' : ''"
                     label="Email"
-                  ></v-text-field>
+                  />
                 </div>
                 <div>
                   <v-text-field
@@ -161,19 +101,13 @@
                     prepend-icon="phone"
                     :append-icon="enabledEditMode ? 'edit' : ''"
                     label="Phone Number"
-                  ></v-text-field>
+                  />
                 </div>
                 <div v-if="enabledEditMode">
-                  <v-btn
-                    flat
-                    @click="enabledEditMode = false"
-                  >
+                  <v-btn flat @click="enabledEditMode = false">
                     Cancel
                   </v-btn>
-                  <v-btn
-                    class="info"
-                    @click="updateContact(contact)"
-                  >
+                  <v-btn class="info" @click="updateContact(contact)">
                     Save
                   </v-btn>
                 </div>
@@ -191,27 +125,23 @@ import ContactsService from '@/services/ContactsService'
 import GroupsService from '@/services/GroupsService'
 
 export default {
-  data () {
+  data() {
     return {
       contact: {},
       contactForm: true,
       enabledEditMode: false,
       groups: [],
       // Form validation
-      nameRules: [
-        name => !!name || 'Please, enter contact name.'
-      ],
+      nameRules: [(name) => !!name || 'Please, enter contact name.'],
       emailRules: [
-        v => !!v || 'Please, enter E-mail address.',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid.'
+        (v) => !!v || 'Please, enter E-mail address.',
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid.'
       ],
-      phoneNumberRules: [
-        pN => !!pN || 'Please, enter phone number.'
-      ]
+      phoneNumberRules: [(pN) => !!pN || 'Please, enter phone number.']
     }
   },
 
-  async mounted () {
+  async mounted() {
     const { id } = this.$store.state.route.params
 
     this.setContact(id)
@@ -219,7 +149,7 @@ export default {
   },
 
   methods: {
-    async updateContact (contact) {
+    async updateContact(contact) {
       if (!this.$refs.contactForm.validate()) return
 
       try {
@@ -232,11 +162,11 @@ export default {
       }
     },
 
-    async setContact (contactID) {
+    async setContact(contactID) {
       this.contact = (await ContactsService.getContact(contactID)).data
     },
 
-    async deleteContact (contactID) {
+    async deleteContact(contactID) {
       try {
         await ContactsService.deleteContact(contactID)
 
@@ -246,10 +176,10 @@ export default {
       }
     },
 
-    async getGroups (userID) {
+    async getGroups(userID) {
       try {
         const groupList = (await GroupsService.getGroups(userID)).data
-        this.groups = groupList.map(group => group.name)
+        this.groups = groupList.map((group) => group.name)
       } catch (err) {
         console.log(err)
       }
@@ -258,6 +188,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

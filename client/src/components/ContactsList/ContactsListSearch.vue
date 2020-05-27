@@ -1,21 +1,17 @@
 <template>
-  <v-toolbar
-    flat
-    class="transparent elevation-1"
-  >
-    <v-text-field
-      v-model="search"
-      label="Search contact"
-      single-line
-    ></v-text-field>
-  </v-toolbar>
+  <v-text-field
+    v-model="search"
+    label="Search contact"
+    single-line
+  ></v-text-field>
 </template>
 
 <script>
+// TODO: import appropriate lodash's method
 import _ from 'lodash'
 
 export default {
-  data () {
+  data() {
     return {
       search: ''
     }
@@ -36,7 +32,7 @@ export default {
 
     '$route.query.search': {
       immediate: true,
-      handler (val) {
+      handler(val) {
         this.search = val
       }
     }
@@ -44,6 +40,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
